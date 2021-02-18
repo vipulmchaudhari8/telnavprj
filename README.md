@@ -34,6 +34,6 @@ http://localhost:8080/nocontent
 6.	For all other random URLs response will with be with status code 400
 http://localhost:8080/nocontent1
 
-7. Project inlcude in-memmory data base integration to store data
+7. Project include in-memory data base integration to store data
 8. Project also include integration test and  Audit for the API calls
 
