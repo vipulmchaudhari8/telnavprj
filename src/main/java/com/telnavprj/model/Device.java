@@ -6,8 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,29 +22,28 @@ import com.telnavprj.audit.Auditable;
 @EntityListeners(AuditingEntityListener.class)
 public class Device extends Auditable {
 
-    @JsonProperty("RecordType") 
-    @NotBlank(message = "RecordType is mandatory")
     @Id
-    public String recordType;
-    
     @JsonProperty("DeviceId") 
     @NotBlank(message = "DeviceId is mandatory")
     public String deviceId;
     
+    @JsonProperty("RecordType") 
+    @NotBlank(message = "RecordType is mandatory")
+    public String recordType;
+        
     @JsonProperty("EventDateTime") 
-    //@NotBlank(message = "EventDateTime is mandatory")
     public Date eventDateTime;
 
-    @JsonProperty("FieldA") 
-    //@NotBlank(message = "FieldA is mandatory")
+    @JsonProperty( "FieldA") 
+    @Min(value = 1)
     public int fieldA;
     
     @JsonProperty("FieldB") 
-    //@NotBlank(message = "FieldB is mandatory")
+    @NotBlank(message = "FieldB is mandatory")
     public String fieldB;
     
     @JsonProperty("FieldC") 
-    //@NotBlank(message = "FieldC is mandatory")
+    @Min(value = 0)
     public double fieldC;
 
 	public String getRecordType() {

@@ -1,5 +1,7 @@
 package com.telnavprj.controller;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class TeleNavResourceController {
 	@PostMapping(value = "/echo",  consumes = {MediaType.APPLICATION_JSON_VALUE},
 				 produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Device> echo(@Valid @RequestBody Device device)   {
+		 device.setCreatedDate(new Date());
+		 device.setLastModifiedDate(new Date());
+		 deviceDAOImpl.saveDevice(device);
 		 return new ResponseEntity<Device>(device, HttpStatus.OK);
 	}
 	
@@ -35,8 +40,11 @@ public class TeleNavResourceController {
 	@RequestMapping(value= "/device", method=RequestMethod.POST )	
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
 				 produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> device(@RequestBody Device device) {
+	public ResponseEntity<?> getDevice(@RequestBody Device device) {
 		deviceDAOImpl.saveDevice(device);
+		 device.setCreatedDate(new Date());
+		 device.setLastModifiedDate(new Date());		
+		 
 		 return new ResponseEntity(device.getDeviceId(), HttpStatus.OK);
 	}
 	
@@ -44,6 +52,9 @@ public class TeleNavResourceController {
 	@ResponseStatus( HttpStatus.NO_CONTENT)
 	public void nocontent() {}
 	
+	@RequestMapping({ "/h2-console" })
+	@ResponseStatus( HttpStatus.NO_CONTENT)
+	public void nocontent1() {}
 	
 	@RequestMapping(value="*")
 	@ResponseStatus( HttpStatus.BAD_REQUEST)
